@@ -27,11 +27,15 @@ public class AuthInterceptor implements HandlerInterceptor {
         boolean passed = true;
         if (tokenCheck != null) {
             TokenState[] states = tokenCheck.value();
-            TokenState state = getTokenState(request.getHeader("token"));
+            String token = request.getHeader("token");
+            TokenState state = getTokenState(token);
             if (!Arrays.asList(states).contains(state)) {
                 passed = false;
                 sendMessage("Permission denied", response);
                 System.out.println("Block Unauthorized Request");
+            } else {
+                token = TokenUtil.create(TokenUtil.get(token, TokenUtil.USERNAME));
+                response.setHeader("token", token);
             }
         }
         return passed;
