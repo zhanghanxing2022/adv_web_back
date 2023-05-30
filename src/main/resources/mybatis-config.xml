@@ -23,7 +23,9 @@
     </environments>
 
     <mappers>
-        <package name="cn.edu.fudan.advweb.backend.mapper"/>
+<!--        <package name="cn.edu.fudan.advweb.backend.mapper"/>-->
+        <mapper class="cn.edu.fudan.advweb.backend.mapper.UserMapper"></mapper>
+        <mapper class="cn.edu.fudan.advweb.backend.mapper.ImageMapper"></mapper>
     </mappers>
 
 </configuration>
