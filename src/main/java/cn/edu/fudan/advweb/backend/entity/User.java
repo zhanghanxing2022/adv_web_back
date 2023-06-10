@@ -2,6 +2,7 @@ package cn.edu.fudan.advweb.backend.entity;
 
 public class User {
 
+    private Integer userID;
     private String username;
     private String password;
     private String email;
@@ -15,6 +16,22 @@ public class User {
         this.password = password;
         this.email = email;
         this.phone = phone;
+    }
+
+    public User(Integer userID, String username, String password, String email, String phone) {
+        this.userID = userID;
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.phone = phone;
+    }
+
+    public Integer getUserID() {
+        return userID;
+    }
+
+    public void setUserID(Integer userID) {
+        this.userID = userID;
     }
 
     public String getUsername() {

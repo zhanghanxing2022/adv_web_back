@@ -2,23 +2,23 @@ package cn.edu.fudan.advweb.backend.request;
 
 public class UserLoginRequest {
 
-    private String username;
+    private String email;
     private String password;
 
     public UserLoginRequest() {
     }
 
-    public UserLoginRequest(String username, String password) {
-        this.username = username;
+    public UserLoginRequest(String email, String password) {
+        this.email = email;
         this.password = password;
     }
 
-    public String getUsername() {
-        return username;
+    public String getEmail() {
+        return email;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPassword() {

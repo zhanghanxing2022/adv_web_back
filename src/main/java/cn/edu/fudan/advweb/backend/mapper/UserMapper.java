@@ -10,6 +10,9 @@ public interface UserMapper {
     @Select("select * from user where username = #{username}")
     User findUserByUsername(String username);
 
+    @Select("select * from user where email = #{email}")
+    User findUserByEmail(String email);
+
     @Insert("insert into user (username, password, email, phone) values (#{username}, #{password}, #{email}, #{phone})")
     int addUser(User user);
 

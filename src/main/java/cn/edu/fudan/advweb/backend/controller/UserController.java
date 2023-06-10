@@ -15,6 +15,8 @@ import cn.edu.fudan.advweb.backend.utils.SqlSessionUtil;
 import cn.edu.fudan.advweb.backend.utils.TokenUtil;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
@@ -28,47 +30,52 @@ public class UserController {
 
     @PostMapping("/register")
     @ResponseBody
-    public Object register(@RequestBody UserRegisterRequest req) throws IOException {
+    public ResponseEntity<String> register(@RequestBody UserRegisterRequest req) throws IOException {
         SqlSession session = SqlSessionUtil.getSession();
         UserMapper mapper = session.getMapper(UserMapper.class);
         User user = mapper.findUserByUsername(req.getUsername());
         if (user != null) {
             session.close();
-            return new ErrorResponse("The username is already used!");
+            return new ResponseEntity<>("The username is already used!", HttpStatus.BAD_REQUEST);
+        }
+        user = mapper.findUserByEmail(req.getEmail());
+        if (user != null) {
+            session.close();
+            return new ResponseEntity<>("The email is already used!", HttpStatus.BAD_REQUEST);
         }
         mapper.addUser(new User(req.getUsername(), req.getPassword(), req.getEmail(), req.getPhone()));
         session.commit();
         session.close();
-        return new UserRegisterResponse("Register Successfully!");
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @RequestMapping("/login")
     @ResponseBody
-    public Object login(@RequestBody UserLoginRequest req) throws IOException {
+    public ResponseEntity<Object> login(@RequestBody UserLoginRequest req) throws IOException {
         SqlSession session = SqlSessionUtil.getSession();
         UserMapper mapper = session.getMapper(UserMapper.class);
-        User user = mapper.findUserByUsername(req.getUsername());
+        User user = mapper.findUserByEmail(req.getEmail());
         session.close();
         if (user == null) {
-            return new ErrorResponse("Username not exists!");
+            return new ResponseEntity<>("User not exists!", HttpStatus.BAD_REQUEST);
         }
         if (!req.getPassword().equals(user.getPassword())) {
-            return new ErrorResponse("Wrong password!");
+            return new ResponseEntity<>("Wrong password!", HttpStatus.BAD_REQUEST);
         }
         String token = TokenUtil.create(user.getUsername());
-        return new UserLoginResponse(token);
+        return new ResponseEntity<>(new UserLoginResponse(token), HttpStatus.OK);
     }
 
     @GetMapping(value = "/profile", produces = "application/json")
     @ResponseBody
     @TokenCheck(TokenState.USER_LOGIN)
-    public Object profile(@RequestHeader String token) throws IOException {
+    public ResponseEntity<Object> profile(@RequestHeader String token) throws IOException {
         String username = TokenUtil.get(token, TokenUtil.USERNAME);
         SqlSession session = SqlSessionUtil.getSession();
         UserMapper mapper = session.getMapper(UserMapper.class);
         User user = mapper.findUserByUsername(username);
         session.close();
-        return new UserProfileResponse(user);
+        return new ResponseEntity<>(new UserProfileResponse(user), HttpStatus.OK);
     }
 
     @PostMapping("/chpwd")
@@ -90,7 +97,7 @@ public class UserController {
         return new UserChpwdResponse("Change password Successfully!");
     }
 
-    @GetMapping(value = "/images", produces = "application/json")
+    @GetMapping(value = "/figures", produces = "application/json")
     @ResponseBody
     @TokenCheck(TokenState.USER_LOGIN)
     public Object images(@RequestHeader String token) throws IOException {
