@@ -8,12 +8,16 @@ public class UserProfileResponse {
     private String username;
     private String email;
     private String phone;
+    private String figure;
+    private String skin;
 
-    public UserProfileResponse(User user) {
+    public UserProfileResponse(User user, String figure, String skin) {
         this.userID = user.getUserID();
         this.username = user.getUsername();
         this.email = user.getEmail();
         this.phone = user.getPhone();
+        this.figure = figure;
+        this.skin = skin;
     }
 
     public Integer getUserID() {
@@ -46,5 +50,21 @@ public class UserProfileResponse {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public String getFigure() {
+        return figure;
+    }
+
+    public void setFigure(String figure) {
+        this.figure = figure;
+    }
+
+    public String getSkin() {
+        return skin;
+    }
+
+    public void setSkin(String skin) {
+        this.skin = skin;
     }
 }

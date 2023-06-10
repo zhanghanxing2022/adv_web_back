@@ -2,11 +2,11 @@ package cn.edu.fudan.advweb.backend.controller;
 
 import cn.edu.fudan.advweb.backend.auth.TokenCheck;
 import cn.edu.fudan.advweb.backend.auth.TokenState;
-import cn.edu.fudan.advweb.backend.entity.Image;
 import cn.edu.fudan.advweb.backend.entity.User;
-import cn.edu.fudan.advweb.backend.mapper.ImageMapper;
+import cn.edu.fudan.advweb.backend.entity.UserFigure;
+import cn.edu.fudan.advweb.backend.mapper.UserFigureMapper;
 import cn.edu.fudan.advweb.backend.mapper.UserMapper;
-import cn.edu.fudan.advweb.backend.request.UserAddImageRequest;
+import cn.edu.fudan.advweb.backend.request.UserAddFigureRequest;
 import cn.edu.fudan.advweb.backend.request.UserChpwdRequest;
 import cn.edu.fudan.advweb.backend.request.UserLoginRequest;
 import cn.edu.fudan.advweb.backend.request.UserRegisterRequest;
@@ -20,6 +20,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -73,9 +74,14 @@ public class UserController {
         String username = TokenUtil.get(token, TokenUtil.USERNAME);
         SqlSession session = SqlSessionUtil.getSession();
         UserMapper mapper = session.getMapper(UserMapper.class);
+        // 查找基本信息
         User user = mapper.findUserByUsername(username);
+        // 查找figure与skin信息
+        UserFigureMapper userFigureMapper = session.getMapper(UserFigureMapper.class);
+        String figure = userFigureMapper.findFavoriteFigureByUserID(user.getUserID()).getFigure();
+        String skin = userFigureMapper.findFavoriteSkinByUserID(user.getUserID()).getSkin();
         session.close();
-        return new ResponseEntity<>(new UserProfileResponse(user), HttpStatus.OK);
+        return new ResponseEntity<>(new UserProfileResponse(user, figure, skin), HttpStatus.OK);
     }
 
     @PostMapping("/chpwd")
@@ -97,32 +103,53 @@ public class UserController {
         return new UserChpwdResponse("Change password Successfully!");
     }
 
-    @GetMapping(value = "/figures", produces = "application/json")
+    @GetMapping("/figures")
     @ResponseBody
     @TokenCheck(TokenState.USER_LOGIN)
-    public Object images(@RequestHeader String token) throws IOException {
+    public ResponseEntity<Object> figures(@RequestHeader String token) throws IOException {
         String username = TokenUtil.get(token, TokenUtil.USERNAME);
         SqlSession session = SqlSessionUtil.getSession();
-        ImageMapper mapper = session.getMapper(ImageMapper.class);
-        List<Image> images = mapper.findImagesByUsername(username);
+        UserMapper userMapper = session.getMapper(UserMapper.class);
+        User user = userMapper.findUserByUsername(username);
+        UserFigureMapper userFigureMapper = session.getMapper(UserFigureMapper.class);
+        List<UserFigure> figureList = userFigureMapper.findByUserID(user.getUserID());
         session.close();
-        return new UserImagesResponse(images);
+        return new ResponseEntity<>(new UserFiguresResponse(figureList), HttpStatus.OK);
     }
 
-    @PostMapping("/addImage")
+    @GetMapping("/favorite")
     @ResponseBody
     @TokenCheck(TokenState.USER_LOGIN)
-    public Object addImage(@RequestHeader String token, @RequestBody UserAddImageRequest req) throws IOException {
+    public ResponseEntity<Object> favoriteFigureAndSkin(@RequestHeader String token) throws IOException {
         String username = TokenUtil.get(token, TokenUtil.USERNAME);
         SqlSession session = SqlSessionUtil.getSession();
-        ImageMapper mapper = session.getMapper(ImageMapper.class);
-        int cnt = mapper.findImagesByUsername(username).size();
-        mapper.addImage(new Image(req.getName(), username, cnt + 1));
+        UserMapper userMapper = session.getMapper(UserMapper.class);
+        User user = userMapper.findUserByUsername(username);
+        UserFigureMapper userFigureMapper = session.getMapper(UserFigureMapper.class);
+        String figure = userFigureMapper.findFavoriteFigureByUserID(user.getUserID()).getFigure();
+        String skin = userFigureMapper.findFavoriteSkinByUserID(user.getUserID()).getSkin();
+        session.close();
+        return new ResponseEntity<>(new UserFavoriteResponse(figure, skin), HttpStatus.OK);
+    }
+
+    @PostMapping("/addFigure")
+    @ResponseBody
+    @TokenCheck(TokenState.USER_LOGIN)
+    public ResponseEntity<Object> addFigure(@RequestHeader String token, @RequestBody UserAddFigureRequest req) throws IOException {
+        String username = TokenUtil.get(token, TokenUtil.USERNAME);
+        SqlSession session = SqlSessionUtil.getSession();
+        UserMapper userMapper = session.getMapper(UserMapper.class);
+        User user = userMapper.findUserByUsername(username);
+        UserFigureMapper userFigureMapper = session.getMapper(UserFigureMapper.class);
+        // 先查order是多少
+        int order = userFigureMapper.findByUserID(user.getUserID()).size() + 1;
+        int result = userFigureMapper.AddUserFigure(new UserFigure(user.getUserID(), req.getFigure(), req.getSkin(), order, new Date()));
         session.commit();
         session.close();
-        return new UserAddImageResponse("Add Image Successfully!");
+        if (result != 1) {
+            return new ResponseEntity<>(new ErrorResponse("Data Error!"), HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(new UserAddFigureResponse("Add Figure Successfully!"), HttpStatus.OK);
     }
-
-
 
 }
