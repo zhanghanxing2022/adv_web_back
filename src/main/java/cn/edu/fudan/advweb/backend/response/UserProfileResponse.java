@@ -10,14 +10,20 @@ public class UserProfileResponse {
     private String phone;
     private String figure;
     private String skin;
+    private String algorithm;
+    private String learn;
+    private String practice;
 
-    public UserProfileResponse(User user, String figure, String skin) {
+    public UserProfileResponse(User user, String figure, String skin, String algorithm, String learn, String practice) {
         this.userID = user.getUserID();
         this.username = user.getUsername();
         this.email = user.getEmail();
         this.phone = user.getPhone();
         this.figure = figure;
         this.skin = skin;
+        this.algorithm = algorithm;
+        this.learn = learn;
+        this.practice = practice;
     }
 
     public Integer getUserID() {
@@ -66,5 +72,29 @@ public class UserProfileResponse {
 
     public void setSkin(String skin) {
         this.skin = skin;
+    }
+
+    public String getAlgorithm() {
+        return algorithm;
+    }
+
+    public void setAlgorithm(String algorithm) {
+        this.algorithm = algorithm;
+    }
+
+    public String getLearn() {
+        return learn;
+    }
+
+    public void setLearn(String learn) {
+        this.learn = learn;
+    }
+
+    public String getPractice() {
+        return practice;
+    }
+
+    public void setPractice(String practice) {
+        this.practice = practice;
     }
 }

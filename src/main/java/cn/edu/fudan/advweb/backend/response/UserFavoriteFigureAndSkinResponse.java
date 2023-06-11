@@ -1,14 +1,14 @@
 package cn.edu.fudan.advweb.backend.response;
 
-public class UserFavoriteResponse {
+public class UserFavoriteFigureAndSkinResponse {
 
     private String figure;
     private String skin;
 
-    public UserFavoriteResponse() {
+    public UserFavoriteFigureAndSkinResponse() {
     }
 
-    public UserFavoriteResponse(String figure, String skin) {
+    public UserFavoriteFigureAndSkinResponse(String figure, String skin) {
         this.figure = figure;
         this.skin = skin;
     }
