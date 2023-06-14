@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface UserAlgorithmMapper {
 
-    @Select("select * from user_algorithm where userID = #{userID}")
+    @Select("select * from user_algorithm where userID = #{userID} order by time")
     List<UserAlgorithm> findByUserID(int userID);
 
     @Insert("insert into user_algorithm (userID, algorithm, type, time) values (#{userID}, #{algorithm}, #{type}, #{time})")

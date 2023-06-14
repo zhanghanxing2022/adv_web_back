@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface UserFigureMapper {
 
-    @Select("select * from user_figure where userID = #{userID}")
+    @Select("select * from user_figure where userID = #{userID} order by `order`")
     List<UserFigure> findByUserID(Integer userID);
 
     @Insert("insert into user_figure (userID, figure, skin, `order`, time) values (#{userID}, #{figure}, #{skin}, #{order}, #{time})")
