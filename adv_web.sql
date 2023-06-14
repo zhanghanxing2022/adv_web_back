@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 80028
 File Encoding         : 65001
 
-Date: 2023-06-11 17:41:35
+Date: 2023-06-15 00:59:52
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -27,9 +27,13 @@ CREATE TABLE `algorithm` (
 -- ----------------------------
 -- Records of algorithm
 -- ----------------------------
+INSERT INTO `algorithm` VALUES ('BST');
 INSERT INTO `algorithm` VALUES ('HeapSort');
 INSERT INTO `algorithm` VALUES ('MergeSort');
 INSERT INTO `algorithm` VALUES ('QuickSort');
+INSERT INTO `algorithm` VALUES ('二叉树遍历');
+INSERT INTO `algorithm` VALUES ('冒泡排序');
+INSERT INTO `algorithm` VALUES ('选择排序');
 
 -- ----------------------------
 -- Table structure for figure
@@ -64,7 +68,7 @@ CREATE TABLE `user` (
   `phone` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`userID`),
   UNIQUE KEY `user_pk` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- ----------------------------
 -- Records of user
@@ -74,6 +78,8 @@ INSERT INTO `user` VALUES ('2', 'fengshuangli', '12345678', '13302010002@fudan.e
 INSERT INTO `user` VALUES ('4', 'new-user', 'abcdefg', '123@email.com', '123');
 INSERT INTO `user` VALUES ('6', 'abc', 'ccc', 'a@b.com', '1234567890');
 INSERT INTO `user` VALUES ('8', 'testUser', 'password', 'test@gmail.com', null);
+INSERT INTO `user` VALUES ('9', 'jiadisu', 'password', 'jiadisu@gmail.com', '18317723039');
+INSERT INTO `user` VALUES ('10', 'jeffery', 'password', 'pat@example.com', '1111111111');
 
 -- ----------------------------
 -- Table structure for user_algorithm
@@ -95,11 +101,20 @@ CREATE TABLE `user_algorithm` (
 -- ----------------------------
 INSERT INTO `user_algorithm` VALUES ('8', 'HeapSort', 'LEARN', '2023-06-11 16:02:08');
 INSERT INTO `user_algorithm` VALUES ('8', 'HeapSort', 'PRACTICE', '2023-06-11 17:06:48');
+INSERT INTO `user_algorithm` VALUES ('8', 'HeapSort', 'LEARN', '2023-06-11 20:23:14');
+INSERT INTO `user_algorithm` VALUES ('8', 'HeapSort', 'LEARN', '2023-06-11 20:24:28');
+INSERT INTO `user_algorithm` VALUES ('8', 'HeapSort', 'LEARN', '2023-06-11 20:25:56');
 INSERT INTO `user_algorithm` VALUES ('8', 'MergeSort', 'LEARN', '2023-06-11 16:02:08');
 INSERT INTO `user_algorithm` VALUES ('8', 'MergeSort', 'PRACTICE', '2023-06-11 17:06:24');
+INSERT INTO `user_algorithm` VALUES ('8', 'MergeSort', 'LEARN', '2023-06-11 20:23:14');
+INSERT INTO `user_algorithm` VALUES ('8', 'MergeSort', 'LEARN', '2023-06-11 20:24:28');
+INSERT INTO `user_algorithm` VALUES ('8', 'MergeSort', 'LEARN', '2023-06-11 20:25:56');
 INSERT INTO `user_algorithm` VALUES ('8', 'QuickSort', 'LEARN', '2023-06-11 15:49:15');
 INSERT INTO `user_algorithm` VALUES ('8', 'QuickSort', 'LEARN', '2023-06-11 16:02:07');
 INSERT INTO `user_algorithm` VALUES ('8', 'QuickSort', 'PRACTICE', '2023-06-11 16:58:11');
+INSERT INTO `user_algorithm` VALUES ('8', 'QuickSort', 'LEARN', '2023-06-11 20:23:14');
+INSERT INTO `user_algorithm` VALUES ('8', 'QuickSort', 'LEARN', '2023-06-11 20:24:28');
+INSERT INTO `user_algorithm` VALUES ('8', 'QuickSort', 'LEARN', '2023-06-11 20:25:56');
 
 -- ----------------------------
 -- Table structure for user_figure
