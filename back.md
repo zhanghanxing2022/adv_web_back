@@ -533,6 +533,7 @@ $ tree
 1. 设置统一的权限管理拦截器，以类似AOP的形式管理权限，接口实现时只需要关注本身的业务逻辑即可，不需要关注权限的校验，解耦；
 2. 封装接口的请求体与响应体，分别封装在包`request`与`response`中；同时设置api函数的返回值为`ResponseEntity<Object>`保证了接口返回数据的扩展性；
 3. 设置统一的错误请求响应`ErrorResponse`，将错误响应与正确响应区分开，如`UserProfileResponse`的内容不需要考虑请求错误的情况，一方面解耦另一方面可以复用；
+4. 鲁棒性：`TokenUtil`对外暴露函数`get(token, key)`从而解析得到token中包含的key信息；但由于key为预设的字符串（如`type`与`username`），为了避免函数调用传入预设之外的参数，TokenUtil对外暴露几个int的常量，用来映射到预设的字符串，若传入的int未知则返回null；
 
 ## 六、部署
 
