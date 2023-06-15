@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 80028
 File Encoding         : 65001
 
-Date: 2023-06-15 00:59:52
+Date: 2023-06-15 09:12:59
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -28,12 +28,11 @@ CREATE TABLE `algorithm` (
 -- Records of algorithm
 -- ----------------------------
 INSERT INTO `algorithm` VALUES ('BST');
+INSERT INTO `algorithm` VALUES ('BubbleSort');
 INSERT INTO `algorithm` VALUES ('HeapSort');
 INSERT INTO `algorithm` VALUES ('MergeSort');
 INSERT INTO `algorithm` VALUES ('QuickSort');
-INSERT INTO `algorithm` VALUES ('二叉树遍历');
-INSERT INTO `algorithm` VALUES ('冒泡排序');
-INSERT INTO `algorithm` VALUES ('选择排序');
+INSERT INTO `algorithm` VALUES ('SelectSort');
 
 -- ----------------------------
 -- Table structure for figure
@@ -68,7 +67,7 @@ CREATE TABLE `user` (
   `phone` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`userID`),
   UNIQUE KEY `user_pk` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- ----------------------------
 -- Records of user
@@ -80,6 +79,7 @@ INSERT INTO `user` VALUES ('6', 'abc', 'ccc', 'a@b.com', '1234567890');
 INSERT INTO `user` VALUES ('8', 'testUser', 'password', 'test@gmail.com', null);
 INSERT INTO `user` VALUES ('9', 'jiadisu', 'password', 'jiadisu@gmail.com', '18317723039');
 INSERT INTO `user` VALUES ('10', 'jeffery', 'password', 'pat@example.com', '1111111111');
+INSERT INTO `user` VALUES ('11', 'username2', 'password', 'test@email.com', '123455678');
 
 -- ----------------------------
 -- Table structure for user_algorithm
@@ -143,3 +143,6 @@ INSERT INTO `user_figure` VALUES ('8', 'rabbit', 'rabbit', '5', '2023-06-11 00:4
 INSERT INTO `user_figure` VALUES ('8', 'rabbit', '粉色妖精小兔♪', '6', '2023-06-11 01:07:52');
 INSERT INTO `user_figure` VALUES ('8', 'rabbit', '粉色妖精小兔♪', '7', '2023-06-11 16:51:55');
 INSERT INTO `user_figure` VALUES ('8', 'rabbit', '黑旋风', '8', '2023-06-11 16:55:36');
+INSERT INTO `user_figure` VALUES ('8', 'rabbit', 'rabbit', '9', '2023-06-15 02:38:23');
+INSERT INTO `user_figure` VALUES ('8', 'jimmy', 'jimmy', '10', '2023-06-15 02:40:15');
+INSERT INTO `user_figure` VALUES ('8', 'amy', 'amy', '11', '2023-06-15 02:41:26');

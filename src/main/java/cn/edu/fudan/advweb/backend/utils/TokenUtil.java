@@ -24,7 +24,7 @@ public class TokenUtil {
 
     public static String create(String username) {
         Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.SECOND, 3600);
+        calendar.add(Calendar.SECOND, 3600 * 24);
         return JWT.create()
                 .withClaim(USERNAME_STR, username)
                 .withClaim(TYPE_STR, "global")
